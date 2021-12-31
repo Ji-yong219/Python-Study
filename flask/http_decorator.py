@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def http_prepost_response():
+    print("기본 라우트 뷰함수")
     return "/"
 
 @app.before_first_request
