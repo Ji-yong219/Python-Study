@@ -43,11 +43,17 @@ class SQLAlchemySessionInterface(SessionInterface):
     def save_session(self, app, sesion, response):
         domain = self.get_cookie_domain(app)
         if not session:
-            rec = db_session.query(FlaskSession).filter(FlaskSession.sid == session.sid).first()
+            rec = db_session\
+                .query(FlaskSession)\
+                .filter(FlaskSession.sid == session.sid)\
+                .first()
             db_session.delete(rec)
             db_session.commit()
             if session.modified:
-                response.delete_cookie(app.session_cookie_name, domain=domain)
+                response.delete_cookie(
+                    app.session_cookie_name,
+                    domain=domain
+                )
 
             return
         val = self.serializer.dumps(dict(session))
